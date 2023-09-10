@@ -9,13 +9,12 @@
 <body class="position-relative" data-bs-spy="scroll">
   <%- include('./partials/navbar.ejs') %>
 
-    <section class="container" >
+    <section class="container">
       
-      <p>ID: <%= meme %></p>
-      <p>Name: <%= meme.name %></p>
-      <p>ID: <%= meme.width %> - <%= meme.height %></p>
-      <p>Name: <%= meme.url %></p>
-      
+      <p>ID: <%=  meme %></p>
+    <p>Name: <%= meme.name %></p>
+    <p>Size: <%= meme.width %> - <%= meme.height %></p>
+    <img src="<%= meme.url %>" alt="" <%= meme.url %> >
 
     </section>
 

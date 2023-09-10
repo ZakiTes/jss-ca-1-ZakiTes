@@ -2,19 +2,31 @@ const express = require('express');
 const router = express.Router();
 
 
-router.get('/meme-details/:id/:name/:width/:height/:url', (req, res) => {
-  
 
-  const memeDetails = {
-    id: req.params.id,
-    name: decodeURIComponent(req.params.name), // Decode the name parameter.
-    width: req.params.width,
-    height: req.params.height,
-    url: decodeURIComponent(req.params.url),
+router.get('/:id', (req, res) => {
+  
+  const memeData = fetchMemeById(req.params.id);
+
+  if (!memeData) {
+    
+    res.status(404).send('Meme not found');
+    return;
+  }
+
+  
+  const memeDetail = {
+    id: memeData.id,
+    name: memeData.name,
+    width: memeData.width,
+    height: memeData.height,
+    image: memeData.url,
   };
 
-  res.render('meme', { memeDetails })
-})
+  
+  res.render('meme', { meme: memeDetail });
+});
+
+
 
 
 
