@@ -9,16 +9,19 @@
 <body class="position-relative" data-bs-spy="scroll">
   <%- include('./partials/navbar.ejs') %>
     <section class="container">
+      <input type="text" id="searchInput" placeholder="Search for something...">
+<button id="searchButton">Search</button>
       <table class="table" id="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
+            <th scope="col">Name</th>
             <th scope="col">Size</th>
             <th scope="col">Image</th>
-            <th scope="col">Options</th>
+            <th scope="col">Details</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
           <tr>
             <th scope="row">
             </th>

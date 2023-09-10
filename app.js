@@ -3,11 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport')
+var session = require('express-session');
+var JsonStore = require('express-session-json')(session);
+
 var indexRouter = require('./routes/index');
 var app = express();
 const memesRouter = require('./routes/memes');
 const http = require('http');
-
+const memeRouter= require('./routes/meme');
+const loginRouter= require('./routes/login');
 
 
 
@@ -24,33 +29,24 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use(express.static('public'));
 
 
-// Proxy route for the external API
-// Proxy route for the external API
-app.get('/proxy/memes', async (req, res) => {
-	try {
-	  const externalApiUrl = 'http://143.42.108.232:81/memes'; // External API URL
-  
-	  http.get(externalApiUrl, (response) => {
-		let data = '';
-  
-		response.on('data', (chunk) => {
-		  data += chunk;
-		});
-  
-		response.on('end', () => {
-		  res.json(JSON.parse(data));
-		});
-	  });
-	} catch (error) {
-	  console.error('Error fetching memes:', error);
-	  res.status(500).json({ error: 'An error occurred' });
-	}
-  });
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: false,
+	store: new JsonStore()
+  }));
+  app.use(passport.authenticate('session'));
 
 
 app.use('/', indexRouter);
 app.use('/memes', memesRouter);
+app.use('/meme', memeRouter);
+app.use('/login', loginRouter);
 
+//post
+
+  
+  
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	next(createError(404));
